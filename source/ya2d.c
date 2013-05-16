@@ -15,10 +15,13 @@
         
 		ioPadInit(7);
 	//Tiny 3D
-			tiny3d_Init(1024 * 1024);
+			tiny3d_Init(YA2D_VERTEX_BUFFER_MEMORY);
 			
-			ya2d_textureMem = tiny3d_AllocTexture(64*1024*1024); 
-			ya2d_texturePointer = ya2d_textureMem ;
+			ya2d_textureMem = tiny3d_AllocTexture(YA2D_RSX_TEXTURE_MEMORY); 
+			ya2d_texturePointer = ya2d_textureMem;
+			
+			//Init dynamic memory
+				init_valloc((u64)(ya2d_textureMem + YA2D_RSX_STATIC_MEMORY_SIZE), (u64)YA2D_RSX_DYNAMIC_MEMORY_SIZE);
 			
 			//Load default font
 				ResetFont();

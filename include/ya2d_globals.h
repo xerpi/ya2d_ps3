@@ -12,8 +12,13 @@
 #define ya2d_millis() (sysGetSystemTime()/1000)
 
 #define YA2D_ERROR_BUFSIZE 256
-
 #define YA2D_DEFAULT_FONT 0
+
+#define YA2D_VERTEX_BUFFER_MEMORY     (1  * 1024 * 1024)
+#define YA2D_RSX_TEXTURE_MEMORY       (64 * 1024 * 1024)
+#define YA2D_RSX_STATIC_MEMORY_SIZE   (8  * 1024 * 1024)
+#define YA2D_RSX_DYNAMIC_MEMORY_SIZE  (YA2D_RSX_TEXTURE_MEMORY-YA2D_RSX_STATIC_MEMORY_SIZE)
+
 
 extern u32* ya2d_textureMem;
 extern u32* ya2d_texturePointer;

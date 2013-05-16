@@ -33,9 +33,8 @@
 		}
 			
 		texp->dataLength = texp->rowBytes * texp->textureHeight;
-		texp->data = ya2d_texturePointer;
+		texp->data = valloc(texp->dataLength);
 		texp->textureOffset = tiny3d_TextureOffset(texp->data);
-		ya2d_texturePointer += (texp->dataLength + 3) & ~3;
 		return texp;
 	}
 	
@@ -56,8 +55,13 @@
 
     void ya2d_freeTexture(ya2d_Texture *texp)
     {
-        if(texp->data != NULL)
+        if(texp != NULL)
         {
+			if(texp->data != NULL)
+			{
+				vfree(texp->data);
+				texp->data = NULL;
+			}
 			free(texp);
 			texp = NULL;
         }

@@ -10,6 +10,7 @@
 #include <sysmodule/sysmodule.h>
 #include <lv2/systime.h>
 #include <sys/systime.h>
+#include <valloc.h>
 
 #include "ya2d_globals.h"
 #include "ya2d_screen.h"
