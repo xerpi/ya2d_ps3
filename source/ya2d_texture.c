@@ -1,21 +1,5 @@
 #include "ya2d_texture.h"
 
-//Simple draw
-	//Non swizzled
-		//GU_SPRITES: 28.54 FPS
-		//GU_TRIANGLE_STRIP: 37.36 FPS
-	//Swizzled
-		//GU_SPRITES: 89.91 FPS
-		//GU_TRIANGLE_STRIP: 110.34 FPS
-//Fast draw
-	//Non swizzled
-		//GU_SPRITES: 148.26 FPS
-		//GU_TRIANGLE_STRIP: 142.57 FPS
-	//Swizzled
-		//GU_SPRITES: 264.74 FPS
-		//GU_TRIANGLE_STRIP: 263.21 FPS
-
-
 
 	ya2d_Texture* ya2d_createTexture(int w, int h, int format)
 	{

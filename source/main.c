@@ -19,7 +19,7 @@ s32 main(s32 argc, const char* argv[])
 		ya2d_screenBeginDrawing();
 		ya2d_controlsRead();
 		
-		DrawFormatString(15, 15, "YA2D LIB -- by xerpi, thanks to deaphroat for testing ;)");
+		DrawFormatString(15, 15, "YA2D LIB -- by xerpi, thanks to deaphroat for testing ;)\nFPS: %.2f", ya2d_screenFPS());
 		
 		if(ya2d_paddata[0].BTN_RIGHT) x+=10;
 		if(ya2d_paddata[0].BTN_LEFT)  x-=10;

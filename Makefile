@@ -23,7 +23,6 @@ INCLUDES	:=	include
 PKGFILES	:=	$(CURDIR)/pkgfiles
 
 TITLE		:=	YA2D
-APPID		:=	NORSX0000
 APPID		:=	YA2D00000
 CONTENTID	:=      UP0001-$(APPID)_00-0000000000000000
 ICON0		:=	$(CURDIR)/ICON0.PNG
@@ -130,6 +129,11 @@ run:
 
 #---------------------------------------------------------------------------------
 pkg:	$(BUILD) $(OUTPUT).pkg
+
+dropbox: pkg
+	rm -f "/home/xerpi/Dropbox/xerpi - Lua4PS3 testing/YA2D PS3/YA2D_PS3.pkg"
+	cp YA2D_PS3.pkg "/home/xerpi/Dropbox/xerpi - Lua4PS3 testing/YA2D PS3"
+
 
 #---------------------------------------------------------------------------------
 else

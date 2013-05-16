@@ -9,6 +9,8 @@
 	#define RGB(r,g,b) RGBA(r,g,b,255)
 #endif
 
+#define ya2d_millis() (sysGetSystemTime()/1000)
+
 #define YA2D_ERROR_BUFSIZE 256
 
 #define YA2D_DEFAULT_FONT 0
