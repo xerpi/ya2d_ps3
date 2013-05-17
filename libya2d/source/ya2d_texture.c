@@ -120,7 +120,25 @@
 
 	void ya2d_drawBlendTexture(ya2d_Texture *texp, int x, int y, u32 color)
 	{
+		if(!texp->data) return;
 
+		ya2d_setTexture(texp);
+		
+		tiny3d_SetPolygon(TINY3D_TRIANGLE_STRIP);
+			tiny3d_VertexColor(color);
+		
+			tiny3d_VertexPos(x, y, 65535);
+			tiny3d_VertexTexture(0.0f, 0.0f);
+			
+			tiny3d_VertexPos(x, y+texp->imageHeight, 65535);
+			tiny3d_VertexTexture(0.0f, 1.0f);
+			
+			tiny3d_VertexPos(x+texp->imageWidth, y, 65535);
+			tiny3d_VertexTexture(1.0f, 0.0f);
+			
+			tiny3d_VertexPos(x+texp->imageWidth, y+texp->imageHeight, 65535);
+			tiny3d_VertexTexture(1.0f, 1.0f);
+		tiny3d_End();
 	}
 
 

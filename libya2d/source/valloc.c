@@ -13,6 +13,7 @@
 
 #include <ppu-lv2.h>
 #include <malloc.h>
+#include <tiny3d.h>
 #include "valloc.h"
 
 
@@ -47,28 +48,21 @@ void init_valloc(u64 base_address, u64 size)
 	VRAM_SIZE = size;
 }
 
-size_t vgetMemorySize(unsigned int width, unsigned int height, unsigned int psm)
+size_t vgetMemorySize(unsigned int width, unsigned int height, unsigned int format)
 {
-	switch (psm)
+	switch (format)
 	{
-		/*case GU_PSM_T4:
-			return (width * height) >> 1;
-
-		case GU_PSM_T8:
+		case TINY3D_TEX_FORMAT_L8:
 			return width * height;
 
-		case GU_PSM_5650:
-		case GU_PSM_5551:
-		case GU_PSM_4444:
-		case GU_PSM_T16:
+		case TINY3D_TEX_FORMAT_A1R5G5B5:
+		case TINY3D_TEX_FORMAT_A4R4G4B4:
+		case TINY3D_TEX_FORMAT_R5G6B5:
 			return 2 * width * height;
 
-		case GU_PSM_8888:
-		case GU_PSM_T32:
-			return 4 * width * height;
-		*/
+		case TINY3D_TEX_FORMAT_A8R8G8B8:
 		default:
-			return 0;
+			return 4 * width * height;
 	}
 }
 

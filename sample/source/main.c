@@ -1,7 +1,8 @@
 #include <time.h>
 #include <tiny3d.h>
-#include "ya2d.h"
+#include <ya2d/ya2d.h>
 #include "pngsample_png.h"
+#include "alphaimg_png.h"
 
 #define SCREEN_W 848
 #define SCREEN_H 512
@@ -9,7 +10,8 @@
 s32 main(s32 argc, const char* argv[])
 {
 	ya2d_init();
-	ya2d_Texture *texture = ya2d_loadPNGfromBuffer((void *)pngsample_png, pngsample_png_size);
+	ya2d_Texture *texture1 = ya2d_loadPNGfromBuffer((void *)pngsample_png, pngsample_png_size);
+	ya2d_Texture *texture2 = ya2d_loadPNGfromBuffer((void *)alphaimg_png,  alphaimg_png_size);	
 	int x = 50, y = 100;
 	int size = 50;
 	float angle = 0.0f;
@@ -33,7 +35,8 @@ s32 main(s32 argc, const char* argv[])
 		if(y<0) y = 0;
 						
 		
-		ya2d_drawRotateTexture(texture, 50, 90, angle+= 0.05f);
+		ya2d_drawRotateTexture(texture1, 50, 90, angle+= 0.05f);
+		ya2d_drawBlendTexture(texture2, 500, 50, rand() & 0xFF);
 		//ya2d_blitRotateTetxure(500, 310, angle, texture);
 		
 		ya2d_drawFillRect(x, y, size, size, 0xFF0000FF);
@@ -41,7 +44,8 @@ s32 main(s32 argc, const char* argv[])
 		ya2d_screenFlip();
 		if(ya2d_paddata[0].BTN_START) break;
 	}
-	ya2d_freeTexture(texture);
+	ya2d_freeTexture(texture1);
+	ya2d_freeTexture(texture2);
 	ya2d_deinit();
 	return 0;
 }

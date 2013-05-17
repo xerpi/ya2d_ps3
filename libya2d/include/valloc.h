@@ -25,7 +25,7 @@ extern "C" {
 
 void init_valloc(u64 base_address, u64 size);
 
-size_t vgetMemorySize(unsigned int width, unsigned int height, unsigned int psm);
+size_t vgetMemorySize(unsigned int width, unsigned int height, unsigned int format);
 
 // Return a pointer relative to VRAM Base address useable by GU
 void* vGuPointer( void* ptr );

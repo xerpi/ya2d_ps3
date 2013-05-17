@@ -15,16 +15,17 @@ include $(PSL1GHT)/ppu_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+DROPBOX_FOLDER  := "/home/xerpi/Dropbox/xerpi - Lua4PS3 testing/YA2D PS3/"
+TARGET		:=	YA2D_SAMPLE
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
 PKGFILES	:=	$(CURDIR)/pkgfiles
 
-TITLE		:=	YA2D
+TITLE		:=	YA2D Sample
 APPID		:=	YA2D00000
-CONTENTID	:=      UP0001-$(APPID)_00-0000000000000000
+CONTENTID	:=  UP0001-$(APPID)_00-0000000000000000
 ICON0		:=	$(CURDIR)/ICON0.PNG
 
 #---------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ LDFLAGS		=	$(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lfont -ltiny3d -lc -lgcm_sys -lrsx -lsysutil -lio -lm -lfreetype -lz -lpixman-1 -lrt -llv2 -lsysmodule -lpng -lpngdec -ljpgdec
+LIBS	:=	-lya2d -lfont -ltiny3d -lc -lgcm_sys -lrsx -lsysutil -lio -lm -lfreetype -lz -lpixman-1 -lrt -llv2 -lsysmodule -lpng -lpngdec -ljpgdec
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -131,8 +132,8 @@ run:
 pkg:	$(BUILD) $(OUTPUT).pkg
 
 dropbox: pkg
-	rm -f "/home/xerpi/Dropbox/xerpi - Lua4PS3 testing/YA2D PS3/YA2D_PS3.pkg"
-	cp YA2D_PS3.pkg "/home/xerpi/Dropbox/xerpi - Lua4PS3 testing/YA2D PS3"
+	rm -f $(DROPBOX_FOLDER)/$(TARGET).pkg
+	cp $(TARGET).pkg $(DROPBOX_FOLDER)
 
 
 #---------------------------------------------------------------------------------
