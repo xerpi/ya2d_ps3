@@ -34,6 +34,7 @@
 			
 		texp->dataLength = texp->rowBytes * texp->textureHeight;
 		texp->data = valloc(texp->dataLength);
+		memset((void*)texp->data, 0x0, texp->dataLength);
 		texp->textureOffset = tiny3d_TextureOffset(texp->data);
 		return texp;
 	}
@@ -51,7 +52,8 @@
 	inline void ya2d_setTexture(ya2d_Texture *texp)
 	{
 		tiny3d_SetTexture(0, texp->textureOffset, texp->imageWidth, texp->imageHeight, texp->rowBytes, texp->format, TEXTURE_LINEAR);
-	}
+		//tiny3d_SetTextureWrap(0, texp->textureOffset, texp->imageWidth, texp->imageHeight, texp->rowBytes, texp->format, TEXTWRAP_CLAMP, TEXTWRAP_CLAMP, TEXTURE_LINEAR);
+}
 
     void ya2d_freeTexture(ya2d_Texture *texp)
     {
@@ -69,29 +71,29 @@
 
     void ya2d_drawTexture(ya2d_Texture *texp, int x, int y)
     {
-		if(!texp->data) return;
+		if(!texp || !texp->data) return;
 
 		ya2d_setTexture(texp);
 		
-		tiny3d_SetPolygon(TINY3D_TRIANGLE_STRIP);
+		tiny3d_SetPolygon(TINY3D_QUADS);
 			tiny3d_VertexPos(x, y, 65535);
 			tiny3d_VertexTexture(0.0f, 0.0f);
-			
-			tiny3d_VertexPos(x, y+texp->imageHeight, 65535);
-			tiny3d_VertexTexture(0.0f, 1.0f);
 			
 			tiny3d_VertexPos(x+texp->imageWidth, y, 65535);
 			tiny3d_VertexTexture(1.0f, 0.0f);
 			
 			tiny3d_VertexPos(x+texp->imageWidth, y+texp->imageHeight, 65535);
 			tiny3d_VertexTexture(1.0f, 1.0f);
+			
+			tiny3d_VertexPos(x, y+texp->imageHeight, 65535);
+			tiny3d_VertexTexture(0.0f, 1.0f);
 		tiny3d_End();
     }
      
 
 	void ya2d_drawRotateTexture(ya2d_Texture *texp, int x, int y, float angle)
 	{
-		if(!texp->data) return;
+		if(!texp || !texp->data) return;
 
 		ya2d_setTexture(texp);
 			
@@ -100,18 +102,18 @@
 		
 		tiny3d_SetMatrixModelView(&matrix);
 		
-		tiny3d_SetPolygon(TINY3D_TRIANGLE_STRIP);
+		tiny3d_SetPolygon(TINY3D_QUADS);
 			tiny3d_VertexPos((float)-texp->centerX, (float)-texp->centerY, 65535);
 			tiny3d_VertexTexture(0.0f, 0.0f);
-			
-			tiny3d_VertexPos((float)-texp->centerX, (float)texp->centerY, 65535);
-			tiny3d_VertexTexture(0.0f, 1.0f);
 			
 			tiny3d_VertexPos((float)texp->centerX, (float)-texp->centerY, 65535);
 			tiny3d_VertexTexture(1.0f, 0.0f);
 			
 			tiny3d_VertexPos((float)texp->centerX, (float)texp->centerY, 65535);
 			tiny3d_VertexTexture(1.0f, 1.0f);
+			
+			tiny3d_VertexPos((float)-texp->centerX, (float)texp->centerY, 65535);
+			tiny3d_VertexTexture(0.0f, 1.0f);
 		tiny3d_End();	
 		
 		tiny3d_SetMatrixModelView(NULL); // Identity
@@ -120,24 +122,23 @@
 
 	void ya2d_drawBlendTexture(ya2d_Texture *texp, int x, int y, u32 color)
 	{
-		if(!texp->data) return;
+		if(!texp || !texp->data) return;
 
 		ya2d_setTexture(texp);
 		
-		tiny3d_SetPolygon(TINY3D_TRIANGLE_STRIP);
-			tiny3d_VertexColor(color);
-		
+		tiny3d_SetPolygon(TINY3D_QUADS);
 			tiny3d_VertexPos(x, y, 65535);
+			tiny3d_VertexColor(color);
 			tiny3d_VertexTexture(0.0f, 0.0f);
-			
-			tiny3d_VertexPos(x, y+texp->imageHeight, 65535);
-			tiny3d_VertexTexture(0.0f, 1.0f);
 			
 			tiny3d_VertexPos(x+texp->imageWidth, y, 65535);
 			tiny3d_VertexTexture(1.0f, 0.0f);
 			
 			tiny3d_VertexPos(x+texp->imageWidth, y+texp->imageHeight, 65535);
 			tiny3d_VertexTexture(1.0f, 1.0f);
+			
+			tiny3d_VertexPos(x, y+texp->imageHeight, 65535);
+			tiny3d_VertexTexture(0.0f, 1.0f);
 		tiny3d_End();
 	}
 
@@ -150,7 +151,7 @@
 		{
 			ya2d_Texture *texp = ya2d_createTexture(png.width, png.height, TINY3D_TEX_FORMAT_A8R8G8B8);
 			memcpy(texp->data, png.bmp_out, texp->dataLength);
-			free(png.bmp_out);	
+			free(png.bmp_out);
 			return texp;
 		}
 		return NULL;
@@ -164,7 +165,7 @@
 		{
 			ya2d_Texture *texp = ya2d_createTexture(png.width, png.height, TINY3D_TEX_FORMAT_A8R8G8B8);
 			memcpy(texp->data, png.bmp_out, texp->dataLength);
-			free(png.bmp_out);	
+			free(png.bmp_out);		
 			return texp;
 		}
 		return NULL;

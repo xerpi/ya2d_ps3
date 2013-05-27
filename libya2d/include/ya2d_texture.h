@@ -22,7 +22,7 @@ typedef struct
 	int textureWidth, textureHeight;
 	int centerX, centerY;
     uint32_t rowBytes, dataLength;
-	void *rel_ptr, *data; //data is absolute VRAM pointer
+	void *real_ptr, *data; //data is absolute VRAM pointer
 	int bitDepth, colorType, format;
 	u32 textureOffset;
 	uint8_t hasAlpha, isSwizzled;

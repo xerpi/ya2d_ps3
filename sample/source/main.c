@@ -21,7 +21,9 @@ s32 main(s32 argc, const char* argv[])
 		ya2d_screenBeginDrawing();
 		ya2d_controlsRead();
 		
-		DrawFormatString(15, 15, "YA2D LIB -- by xerpi, thanks to deaphroat and harryoke for testing ;)\nFPS: %.2f", ya2d_screenFPS());
+		DrawFormatString(15, 15, "YA2D LIB -- by xerpi, thanks to deaphroat, harryoke and Veritassdg for testing ;)");
+		DrawFormatString(15, 35, "FPS: %.2f   available vram: %i   largest block: %i", ya2d_screenFPS(),  vmemavail(), vlargestblock()); 
+		DrawFormatString(15, 55, "Press START to exit."); 
 		
 		if(ya2d_paddata[0].BTN_RIGHT) x+=10;
 		if(ya2d_paddata[0].BTN_LEFT)  x-=10;
@@ -33,13 +35,11 @@ s32 main(s32 argc, const char* argv[])
 		if(x<0) x = 0;
 		if(y > (SCREEN_H-size)) y = SCREEN_H-size;
 		if(y<0) y = 0;
-						
-		
-		ya2d_drawRotateTexture(texture1, 50, 90, angle+= 0.05f);
-		ya2d_drawBlendTexture(texture2, 500, 50, rand() & 0xFF);
-		//ya2d_blitRotateTetxure(500, 310, angle, texture);
-		
+					
 		ya2d_drawFillRect(x, y, size, size, 0xFF0000FF);
+		
+		ya2d_drawRotateTexture(texture2, 50, 90, angle += 0.1f);
+		ya2d_drawTexture(texture1, 100, 50);		
 		
 		ya2d_screenFlip();
 		if(ya2d_paddata[0].BTN_START) break;

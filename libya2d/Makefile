@@ -33,7 +33,7 @@ endif
 LIBRARY		:=	libya2d
 
 #---------------------------------------------------------------------------------
-DEFINCS		:=	-I$(PORTLIBS)/include/freetype2 -I$(PORTLIBS)/include/ -I$(PORTLIBS)/include/ya2d -I$(PORTLIBS)/include/ -I$(PSL1GHT)/ppu/include -I$(PSL1GHT)/ppu/include/rsx -I$(PSL1GHT)/ppu/include/lv2 -I$(PSL1GHT)/ppu/include/sys
+DEFINCS		:=	-Iinclude -I$(PORTLIBS)/include/freetype2 -I$(PORTLIBS)/include/  -I$(PORTLIBS)/include/ -I$(PSL1GHT)/ppu/include -I$(PSL1GHT)/ppu/include/rsx -I$(PSL1GHT)/ppu/include/lv2 -I$(PSL1GHT)/ppu/include/sys
 INCLUDES	:=	$(DEFINCS)
 
 CFLAGS		:=	-O2 -mregnames -Wall -mcpu=cell $(MACHDEP) $(INCLUDES) -Wl,-mcell
@@ -63,18 +63,8 @@ lib: $(OBJS)
 	ppu-ar cru $(LIBRARY).a $(OBJS)
 	@echo lib done!
 	
-%.o: %.cpp
-	ppu-gcc $(CXXFLAGS) -c $< -o $@
 #---------------------------------------------------------------------------------
-%.o: %.c
-	ppu-gcc $(CFLAGS) -c $< -o $@
-
-
-#---------------------------------------------------------------------------------
-
-
-#---------------------------------------------------------------------------------
-install:
+install: lib
 #---------------------------------------------------------------------------------
 	@[ -d $(PORTLIBS)/include/ya2d] || mkdir -p $(PORTLIBS)/include/ya2d
 	@cp -frv include/*.h $(PORTLIBS)/include/ya2d
@@ -93,7 +83,6 @@ clean:
 	@rm -rf $(OBJS)
 	@rm -rf $(LIBRARY).a
 	
-
 #---------------------------------------------------------------------------------
 -include $(DEPSDIR)/*.d
 #---------------------------------------------------------------------------------
